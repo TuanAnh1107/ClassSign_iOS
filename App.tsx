@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import {
   SafeAreaView,
   StyleSheet,
@@ -7,7 +7,74 @@ import {
   View,
   StatusBar,
   useColorScheme,
+  Animated,
+  Easing,
 } from 'react-native';
+
+const AnimatedCard = () => {
+  const [isFront, setIsFront] = useState(true);
+
+  const shakeAnim = useRef(new Animated.Value(0)).current;
+  const fadeAnim = useRef(new Animated.Value(1)).current;
+
+  useEffect(() => {
+    const interval = setInterval(() => {
+      setIsFront((prev) => !prev);
+    }, 2000);
+    return () => clearInterval(interval);
+  }, []);
+
+  useEffect(() => {
+    // 1. Shake and Scale animation
+    Animated.sequence([
+      Animated.timing(shakeAnim, { toValue: 1, duration: 50, useNativeDriver: true, easing: Easing.linear }),
+      Animated.timing(shakeAnim, { toValue: -1, duration: 75, useNativeDriver: true, easing: Easing.linear }),
+      Animated.timing(shakeAnim, { toValue: 1, duration: 75, useNativeDriver: true, easing: Easing.linear }),
+      Animated.timing(shakeAnim, { toValue: 0, duration: 50, useNativeDriver: true, easing: Easing.linear }),
+    ]).start();
+
+    // 2. Cross-fade
+    Animated.timing(fadeAnim, {
+      toValue: isFront ? 1 : 0,
+      duration: 300,
+      useNativeDriver: true,
+      easing: Easing.inOut(Easing.ease),
+    }).start();
+  }, [isFront, shakeAnim, fadeAnim]);
+
+  const rotateZ = shakeAnim.interpolate({
+    inputRange: [-1, 0, 1],
+    outputRange: ['-5deg', '0deg', '5deg'],
+  });
+
+  const scale = shakeAnim.interpolate({
+    inputRange: [-1, 0, 1],
+    outputRange: [1.05, 1, 1.05],
+  });
+
+  const frontOpacity = fadeAnim;
+  const backOpacity = fadeAnim.interpolate({
+    inputRange: [0, 1],
+    outputRange: [1, 0],
+  });
+
+  return (
+    <View style={styles.cardWrapper}>
+      <Animated.View style={[styles.cardContainer, { transform: [{ rotateZ }, { scale }] }]}>
+        <Animated.Image
+          source={require('./assets/image/flip.png')}
+          style={[styles.cardImage, { opacity: frontOpacity }]}
+          resizeMode="contain"
+        />
+        <Animated.Image
+          source={require('./assets/image/no_flip.png')}
+          style={[styles.cardImage, styles.cardImageBack, { opacity: backOpacity }]}
+          resizeMode="contain"
+        />
+      </Animated.View>
+    </View>
+  );
+};
 
 function App(): React.JSX.Element {
   const isDarkMode = useColorScheme() === 'dark';
@@ -25,23 +92,8 @@ function App(): React.JSX.Element {
         backgroundColor={backgroundStyle.backgroundColor}
       />
       <View style={styles.container}>
-        <Text style={[styles.title, { color: isDarkMode ? '#FFFFFF' : '#1C1C1E' }]}>
-          Hello Word
-        </Text>
+        <AnimatedCard />
 
-        <View style={[
-          styles.searchContainer,
-          { backgroundColor: isDarkMode ? '#2C2C2E' : '#FFFFFF' }
-        ]}>
-          <Text style={styles.searchIcon}>🔍</Text>
-          <TextInput
-            style={[styles.searchInput, { color: isDarkMode ? '#FFFFFF' : '#1C1C1E' }]}
-            placeholder="Search..."
-            placeholderTextColor={isDarkMode ? '#EBEBF580' : '#8E8E93'}
-            value={searchQuery}
-            onChangeText={setSearchQuery}
-          />
-        </View>
       </View>
     </SafeAreaView>
   );
@@ -81,6 +133,25 @@ const styles = StyleSheet.create({
     flex: 1,
     fontSize: 16,
     height: '100%',
+  },
+  cardWrapper: {
+    alignItems: 'center',
+    justifyContent: 'center',
+    marginTop: 40,
+    flex: 1,
+  },
+  cardContainer: {
+    width: 220,
+    height: 320,
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
+  cardImage: {
+    width: '100%',
+    height: '100%',
+    position: 'absolute',
+  },
+  cardImageBack: {
   },
 });
 
