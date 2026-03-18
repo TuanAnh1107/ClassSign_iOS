@@ -1,12 +1,6 @@
-import { StyleSheet, Dimensions } from 'react-native';
-
-
-const { width } = Dimensions.get('window');
+import { StyleSheet } from 'react-native';
 
 export const styles = StyleSheet.create({
-    container: {
-        flex: 1,
-    },
     gradientContainer: {
         flex: 1,
     },
@@ -15,52 +9,62 @@ export const styles = StyleSheet.create({
         paddingHorizontal: 20,
         justifyContent: 'center',
     },
-    welcomeText: {
-        marginTop: 20,
-        fontSize: 18,
-        color: '#fff',
-        textAlign: 'center',
-        fontWeight: 'bold',
+    formContainer: {
+        width: '100%',
+        borderRadius: 28,
+        paddingVertical: 32,
+        paddingHorizontal: 20,
+        backgroundColor: 'rgba(255, 255, 255, 0.08)',
     },
     logoContainer: {
         alignItems: 'center',
-        marginBottom: 16,
+        marginBottom: 20,
     },
     logo: {
-        width: 104,
-        height: 152,
+        width: 120,
+        height: 176,
         resizeMode: 'contain',
     },
-    description: {
-        fontSize: 14,
-        fontStyle: 'italic',
+    title: {
+        fontSize: 34,
+        fontWeight: '800',
         color: '#fff',
         textAlign: 'center',
-        marginBottom: 40,
+        letterSpacing: 1,
+        marginBottom: 8,
+    },
+    description: {
+        fontSize: 15,
+        lineHeight: 22,
+        color: '#FFECEC',
+        textAlign: 'center',
+        marginBottom: 28,
         fontWeight: '500',
     },
-    formContainer: {
-        width: '100%',
-    },
     input: {
-        width: '90%',
-        alignSelf: 'center',
+        width: '100%',
         height: 50,
-        backgroundColor: 'rgba(255, 255, 255, 0.9)',
+        backgroundColor: 'rgba(255, 255, 255, 0.94)',
         marginBottom: 15,
         paddingHorizontal: 15,
-        borderRadius: 10,
+        borderRadius: 14,
         fontSize: 16,
         color: '#333',
     },
+    errorText: {
+        color: '#FFE3E3',
+        fontSize: 14,
+        marginTop: -4,
+        marginBottom: 14,
+        textAlign: 'center',
+        fontWeight: '600',
+    },
     loginButton: {
         height: 50,
-        width: '40%',
-        alignSelf: 'center',
-        backgroundColor: '#FFD700', // Yellow
+        backgroundColor: '#FFD700',
         justifyContent: 'center',
         alignItems: 'center',
-        borderRadius: 10,
+        borderRadius: 14,
         marginTop: 10,
         shadowColor: '#000',
         shadowOffset: { width: 0, height: 2 },
@@ -69,17 +73,27 @@ export const styles = StyleSheet.create({
         elevation: 5,
     },
     loginButtonText: {
-        color: '#8B0000', // Dark red text for contrast
+        color: '#8B0000',
         fontSize: 18,
         fontWeight: 'bold',
     },
-    registerButton: {
-        marginTop: 20,
-        alignItems: 'center',
+    helperCard: {
+        marginTop: 24,
+        padding: 16,
+        borderRadius: 18,
+        backgroundColor: 'rgba(0, 0, 0, 0.18)',
     },
-    registerButtonText: {
-        color: '#fff',
+    helperTitle: {
+        color: '#FFD700',
         fontSize: 16,
-        textDecorationLine: 'underline',
+        fontWeight: '700',
+        marginBottom: 8,
+        textAlign: 'center',
+    },
+    helperText: {
+        color: '#FFF4F4',
+        fontSize: 14,
+        textAlign: 'center',
+        marginBottom: 4,
     },
 });

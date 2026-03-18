@@ -1,36 +1,24 @@
-import React, { useState } from 'react';
+import React from 'react';
 import { View, TextInput, Text, Image, TouchableOpacity, SafeAreaView } from 'react-native';
 import LinearGradient from 'react-native-linear-gradient';
+import { AuthResult } from '../../../domain/types';
 import { useLoginViewModel } from './useLoginViewModel';
 import { styles } from './styles';
 
-export const LoginScreen = () => {
-    const {
-        username, // Lưu ý: Trong code cũ của bạn không thấy dùng biến này cho input, tôi giữ nguyên
-        setUsername,
-        password,
-        setPassword,
-        handleLogin,
-        handleRegister,
-    } = useLoginViewModel();
+type LoginScreenProps = {
+    onLogin: (username: string, password: string) => AuthResult;
+};
 
-    const [nameInput, setNameInput] = useState("");
-    const [name, setName] = useState("");
-
-    const handlePressLogin = () => {
-        setName(nameInput);
-        handleLogin();
-    };
+export const LoginScreen = ({ onLogin }: LoginScreenProps) => {
+    const { username, setUsername, password, setPassword, errorMessage, handleLogin } =
+        useLoginViewModel(onLogin);
 
     return (
-        /* LinearGradient đưa ra ngoài cùng để phủ màu toàn bộ màn hình */
         <LinearGradient
-            colors={['#8B0000', '#FF4D4D']} // Dark red to light red
+            colors={['#5A0000', '#A71D31', '#D7263D']}
             style={styles.gradientContainer}
         >
-            {/* SafeAreaView bọc nội dung để không bị lẹm vào tai thỏ/thanh trạng thái */}
             <SafeAreaView style={styles.safeArea}>
-                {/* View này dùng để căn giữa các thẻ theo trục dọc */}
                 <View style={styles.formContainer}>
                     <View style={styles.logoContainer}>
                         <Image
@@ -39,41 +27,40 @@ export const LoginScreen = () => {
                         />
                     </View>
 
+                    <Text style={styles.title}>ClassSign</Text>
                     <Text style={styles.description}>
-                        Hệ thống đăng ký học tập tiện lợi
+                        He thong dang ky hoc tap voi giao dien rieng cho admin va sinh vien
                     </Text>
 
                     <TextInput
                         style={styles.input}
-                        placeholder="Tài khoản"
-                        value={nameInput}
-                        onChangeText={setNameInput}
+                        placeholder="Tai khoan"
+                        value={username}
+                        onChangeText={setUsername}
                         autoCapitalize="none"
                         placeholderTextColor="#666"
                     />
 
                     <TextInput
                         style={styles.input}
-                        placeholder="Mật khẩu"
+                        placeholder="Mat khau"
                         value={password}
                         onChangeText={setPassword}
                         secureTextEntry
                         placeholderTextColor="#666"
                     />
 
-                    <TouchableOpacity
-                        style={styles.loginButton}
-                        onPress={handlePressLogin}
-                    >
-                        <Text style={styles.loginButtonText}>Đăng nhập</Text>
+                    {errorMessage ? <Text style={styles.errorText}>{errorMessage}</Text> : null}
+
+                    <TouchableOpacity style={styles.loginButton} onPress={handleLogin}>
+                        <Text style={styles.loginButtonText}>Dang nhap</Text>
                     </TouchableOpacity>
 
-
-                    {name ? (
-                        <Text style={styles.welcomeText}>
-                            Chào mừng: {name}
-                        </Text>
-                    ) : null}
+                    <View style={styles.helperCard}>
+                        <Text style={styles.helperTitle}>Tai khoan mau</Text>
+                        <Text style={styles.helperText}>Admin: admin / admin123</Text>
+                        <Text style={styles.helperText}>Sinh vien: sv001 / 123456</Text>
+                    </View>
                 </View>
             </SafeAreaView>
         </LinearGradient>

@@ -1,0 +1,162 @@
+import { StyleSheet } from 'react-native';
+
+export const styles = StyleSheet.create({
+    gradient: {
+        flex: 1,
+    },
+    safeArea: {
+        flex: 1,
+    },
+    content: {
+        padding: 18,
+        paddingBottom: 40,
+    },
+    headerCard: {
+        backgroundColor: 'rgba(255, 255, 255, 0.1)',
+        borderRadius: 24,
+        padding: 20,
+        marginBottom: 18,
+    },
+    badge: {
+        color: '#FFD166',
+        fontSize: 12,
+        fontWeight: '800',
+        letterSpacing: 1.6,
+        marginBottom: 8,
+    },
+    title: {
+        color: '#FFFFFF',
+        fontSize: 30,
+        fontWeight: '800',
+        marginBottom: 6,
+    },
+    subtitle: {
+        color: '#F8DDE3',
+        fontSize: 14,
+        marginBottom: 16,
+    },
+    logoutButton: {
+        alignSelf: 'flex-start',
+        backgroundColor: '#FFD166',
+        paddingHorizontal: 16,
+        paddingVertical: 10,
+        borderRadius: 999,
+    },
+    logoutButtonText: {
+        color: '#4E1028',
+        fontWeight: '700',
+    },
+    section: {
+        backgroundColor: '#FFF7F9',
+        borderRadius: 22,
+        padding: 18,
+        marginBottom: 18,
+    },
+    sectionTitle: {
+        color: '#5F0F2D',
+        fontSize: 20,
+        fontWeight: '800',
+        marginBottom: 14,
+    },
+    input: {
+        backgroundColor: '#FFFFFF',
+        borderRadius: 14,
+        borderWidth: 1,
+        borderColor: '#E7CDD6',
+        paddingHorizontal: 14,
+        paddingVertical: 12,
+        fontSize: 15,
+        color: '#2D1A20',
+        marginBottom: 12,
+    },
+    multilineInput: {
+        minHeight: 88,
+        textAlignVertical: 'top',
+    },
+    primaryButton: {
+        backgroundColor: '#7A163D',
+        borderRadius: 14,
+        paddingVertical: 14,
+        alignItems: 'center',
+        marginTop: 4,
+    },
+    primaryButtonText: {
+        color: '#FFFFFF',
+        fontSize: 16,
+        fontWeight: '700',
+    },
+    secondaryButton: {
+        borderWidth: 1,
+        borderColor: '#7A163D',
+        borderRadius: 14,
+        paddingVertical: 14,
+        alignItems: 'center',
+        marginTop: 10,
+    },
+    secondaryButtonText: {
+        color: '#7A163D',
+        fontWeight: '700',
+    },
+    classCard: {
+        backgroundColor: '#FFFFFF',
+        borderRadius: 18,
+        borderWidth: 1,
+        borderColor: '#E7CDD6',
+        padding: 16,
+        marginBottom: 12,
+    },
+    classCode: {
+        color: '#A71D31',
+        fontSize: 13,
+        fontWeight: '800',
+        letterSpacing: 1,
+        marginBottom: 6,
+    },
+    className: {
+        color: '#2D1A20',
+        fontSize: 18,
+        fontWeight: '800',
+        marginBottom: 8,
+    },
+    classMeta: {
+        color: '#5C4A50',
+        fontSize: 14,
+        marginBottom: 4,
+    },
+    classDescription: {
+        color: '#4B3A40',
+        fontSize: 14,
+        marginTop: 8,
+        lineHeight: 20,
+    },
+    inlineActionButton: {
+        alignSelf: 'flex-start',
+        marginTop: 12,
+        backgroundColor: '#FFE3AD',
+        borderRadius: 999,
+        paddingHorizontal: 14,
+        paddingVertical: 8,
+    },
+    inlineActionText: {
+        color: '#6E1C00',
+        fontWeight: '700',
+    },
+    studentCard: {
+        backgroundColor: '#FFFFFF',
+        borderRadius: 16,
+        borderWidth: 1,
+        borderColor: '#E7CDD6',
+        padding: 14,
+        marginBottom: 10,
+    },
+    studentName: {
+        color: '#2D1A20',
+        fontSize: 16,
+        fontWeight: '700',
+        marginBottom: 4,
+    },
+    studentMeta: {
+        color: '#5C4A50',
+        fontSize: 14,
+    },
+});

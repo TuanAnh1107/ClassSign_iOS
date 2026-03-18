@@ -1,17 +1,22 @@
 import { useState } from 'react';
+import { AuthResult } from '../../../domain/types';
 
-export const useLoginViewModel = () => {
+export const useLoginViewModel = (
+    onLogin: (username: string, password: string) => AuthResult,
+) => {
     const [username, setUsername] = useState('');
     const [password, setPassword] = useState('');
+    const [errorMessage, setErrorMessage] = useState('');
 
     const handleLogin = () => {
-        // Basic implementation for now
-        console.log('Login attempt with:', { username, password });
-    };
+        const result = onLogin(username.trim(), password);
 
-    const handleRegister = () => {
-        // Basic implementation for now
-        console.log('Register attempt with:', { username, password });
+        if (!result.success) {
+            setErrorMessage(result.message);
+            return;
+        }
+
+        setErrorMessage('');
     };
 
     return {
@@ -19,7 +24,7 @@ export const useLoginViewModel = () => {
         setUsername,
         password,
         setPassword,
+        errorMessage,
         handleLogin,
-        handleRegister,
     };
 };
