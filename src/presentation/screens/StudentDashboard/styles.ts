@@ -1,6 +1,7 @@
-import { StyleSheet, Dimensions } from 'react-native';
+import { Dimensions, StyleSheet } from 'react-native';
 
 const { width } = Dimensions.get('window');
+const gridColumnWidth = Math.max((width - 90) / 7, 60);
 
 export const styles = StyleSheet.create({
     safeArea: {
@@ -14,7 +15,7 @@ export const styles = StyleSheet.create({
     navBarHeader: {
         flexDirection: 'row',
         height: 60,
-        backgroundColor: '#CC0000', // Red background
+        backgroundColor: '#CC0000',
         alignItems: 'center',
         justifyContent: 'space-between',
         paddingHorizontal: 15,
@@ -74,7 +75,7 @@ export const styles = StyleSheet.create({
         marginVertical: 15,
     },
     actionButton: {
-        backgroundColor: '#0055A4', // Blue color for CTA
+        backgroundColor: '#0055A4',
         paddingVertical: 12,
         borderRadius: 6,
         alignItems: 'center',
@@ -97,7 +98,7 @@ export const styles = StyleSheet.create({
         color: '#333',
     },
     registerButton: {
-        backgroundColor: '#28A745', // Green color
+        backgroundColor: '#28A745',
         paddingVertical: 12,
         borderRadius: 6,
         alignItems: 'center',
@@ -146,14 +147,21 @@ export const styles = StyleSheet.create({
         color: '#333',
         textAlign: 'center',
     },
-    // Fixed width for cells to allow horizontal scroll
-    cellId: { width: 50 },
-    cellCode: { width: 80 },
-    cellName: { width: 180 },
-    cellStatus: { width: 100 },
-    cellCredits: { width: 60 },
-
-    // Time Grid Table styles
+    cellId: {
+        width: 50,
+    },
+    cellCode: {
+        width: 80,
+    },
+    cellName: {
+        width: 180,
+    },
+    cellStatus: {
+        width: 100,
+    },
+    cellCredits: {
+        width: 60,
+    },
     timeGrid: {
         borderWidth: 1,
         borderColor: '#EEE',
@@ -170,7 +178,7 @@ export const styles = StyleSheet.create({
         borderColor: '#EEE',
     },
     gridHeaderCell: {
-        width: Math.max((width - 90) / 7, 60), // Responsive width, min 60
+        width: gridColumnWidth,
         height: 40,
         backgroundColor: '#F5F5F5',
         justifyContent: 'center',
@@ -199,7 +207,7 @@ export const styles = StyleSheet.create({
         color: '#666',
     },
     gridCell: {
-        width: Math.max((width - 90) / 7, 60),
+        width: gridColumnWidth,
         height: 50,
         justifyContent: 'center',
         alignItems: 'center',
@@ -209,7 +217,7 @@ export const styles = StyleSheet.create({
         backgroundColor: '#FFF',
     },
     gridCellActive: {
-        backgroundColor: '#E6F3FF', // Light blue background for events
+        backgroundColor: '#E6F3FF',
     },
     gridEventText: {
         fontSize: 10,
@@ -227,5 +235,8 @@ export const styles = StyleSheet.create({
         fontSize: 10,
         color: '#999',
         fontWeight: 'bold',
+    },
+    bottomSpacer: {
+        height: 40,
     },
 });

@@ -19,7 +19,7 @@ export const useStudentDashboardViewModel = (onLogout: () => void) => {
     const [searchQuery, setSearchQuery] = useState('');
 
     const toggleUserInfo = () => {
-        setIsUserInfoVisible(!isUserInfoVisible);
+        setIsUserInfoVisible(currentValue => !currentValue);
     };
 
     const handleLogout = () => {
@@ -35,11 +35,28 @@ export const useStudentDashboardViewModel = (onLogout: () => void) => {
         console.log('Đăng ký học phần:', searchQuery);
     };
 
-    // Sample data for demonstration
     const registeredSubjects: RegisteredSubject[] = [
-        { id: '1', code: 'IT3040', name: 'Kỹ thuật phần mềm', status: 'Thành công', credits: 3 },
-        { id: '2', code: 'IT3020', name: 'Toán rời rạc', status: 'Thành công', credits: 3 },
-        { id: '3', code: 'IT4060', name: 'Thiết kế hệ thống mạng', status: 'Thành công', credits: 3 },
+        {
+            id: '1',
+            code: 'IT3040',
+            name: 'Kỹ thuật phần mềm',
+            status: 'Thành công',
+            credits: 3,
+        },
+        {
+            id: '2',
+            code: 'IT3020',
+            name: 'Toán rời rạc',
+            status: 'Thành công',
+            credits: 3,
+        },
+        {
+            id: '3',
+            code: 'IT4060',
+            name: 'Thiết kế hệ thống mạng',
+            status: 'Thành công',
+            credits: 3,
+        },
     ];
 
     const timeGridEvents: TimeEvent[] = [
