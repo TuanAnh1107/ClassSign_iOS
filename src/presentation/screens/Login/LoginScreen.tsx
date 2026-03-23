@@ -13,16 +13,19 @@ import LinearGradient from 'react-native-linear-gradient';
 import { useLoginViewModel } from './useLoginViewModel';
 import { styles } from './styles';
 
-export const LoginScreen = ({ onLoginSuccess }: { onLoginSuccess?: () => void }) => {
+type LoginScreenProps = {
+    onLoginSuccess?: (role: string) => void;
+};
+
+export const LoginScreen = ({ onLoginSuccess }: LoginScreenProps) => {
     const { password, setPassword, handleLogin } = useLoginViewModel(onLoginSuccess);
     const { width, height } = useWindowDimensions();
     const isLandscape = width > height;
 
-    const [nameInput, setNameInput] = useState('');
-    const [] = useState('');
+    const [usernameInput, setUsernameInput] = useState('');
 
     const handlePressLogin = () => {
-        handleLogin(nameInput);
+        handleLogin(usernameInput);
     };
 
     return (
@@ -65,21 +68,21 @@ export const LoginScreen = ({ onLoginSuccess }: { onLoginSuccess?: () => void })
                                 isLandscape && styles.descriptionLandscape,
                             ]}
                         >
-                            He thong dang ky hoc tap tien loi
+                            Hệ thống đăng ký học tập tiện lợi
                         </Text>
 
                         <TextInput
                             style={[styles.input, isLandscape && styles.inputLandscape]}
-                            placeholder="Tai khoan"
-                            value={nameInput}
-                            onChangeText={setNameInput}
+                            placeholder="Tài khoản"
+                            value={usernameInput}
+                            onChangeText={setUsernameInput}
                             autoCapitalize="none"
                             placeholderTextColor="#666"
                         />
 
                         <TextInput
                             style={[styles.input, isLandscape && styles.inputLandscape]}
-                            placeholder="Mat khau"
+                            placeholder="Mật khẩu"
                             value={password}
                             onChangeText={setPassword}
                             secureTextEntry
@@ -93,7 +96,7 @@ export const LoginScreen = ({ onLoginSuccess }: { onLoginSuccess?: () => void })
                             ]}
                             onPress={handlePressLogin}
                         >
-                            <Text style={styles.loginButtonText}>Dang nhap</Text>
+                            <Text style={styles.loginButtonText}>Đăng nhập</Text>
                         </TouchableOpacity>
 
                     </View>

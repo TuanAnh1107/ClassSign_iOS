@@ -1,29 +1,28 @@
 import { useState } from 'react';
 
-export const useLoginViewModel = (onLoginSuccess?: () => void) => {
-    const [username, setUsername] = useState('');
+export const useLoginViewModel = (onLoginSuccess?: (role: string) => void) => {
     const [password, setPassword] = useState('');
 
     const handleLogin = (currentUsername: string) => {
-        // Basic hardcoded check
-        if (currentUsername === 'user' && password === '1') {
-            onLoginSuccess?.();
+        if (currentUsername === 'admin' && password === '1') {
+            onLoginSuccess?.('admin');
             return;
         }
-        console.log('Login attempt with:', { username: currentUsername, password });
-    };
 
-    const handleRegister = () => {
-        // Basic implementation for now
-        console.log('Register attempt with:', { username, password });
+        if (currentUsername === 'user' && password === '1') {
+            onLoginSuccess?.('student');
+            return;
+        }
+
+        console.log('Login attempt with:', {
+            username: currentUsername,
+            password,
+        });
     };
 
     return {
-        username,
-        setUsername,
         password,
         setPassword,
         handleLogin,
-        handleRegister,
     };
 };
