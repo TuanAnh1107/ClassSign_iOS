@@ -1,20 +1,13 @@
 import React from 'react';
-import { View, SafeAreaView, StyleSheet } from 'react-native';
-import { LoginScreen } from './presentation/screens/Login/LoginScreen';
+import { ThemeProvider } from './presentation/components/ThemeContext';
+import { AppNavigator } from './presentation/navigation/AppNavigator';
 
 const App = () => {
-  return (
-    <View style={styles.container}>
-      <LoginScreen />
-    </View>
-  );
+    return (
+        <ThemeProvider>
+            <AppNavigator />
+        </ThemeProvider>
+    );
 };
-
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: '#fff',
-  },
-});
 
 export default App;

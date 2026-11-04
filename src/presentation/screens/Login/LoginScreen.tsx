@@ -1,80 +1,123 @@
 import React, { useState } from 'react';
-import { View, TextInput, Text, Image, TouchableOpacity, SafeAreaView } from 'react-native';
+import {
+    Image,
+    SafeAreaView,
+    ScrollView,
+    Text,
+    TextInput,
+    TouchableOpacity,
+    View,
+    useWindowDimensions,
+} from 'react-native';
 import LinearGradient from 'react-native-linear-gradient';
-import { useLoginViewModel } from './useLoginViewModel';
-import { styles } from './styles';
+import { useLoginViewModel } from '../../../interface-adapters/viewmodels/Login/useLoginViewModel';
+import { useTheme } from '../../components/ThemeContext';
+import { createLoginStyles } from './styles';
 
-export const LoginScreen = () => {
-    const {
-        username, // Lưu ý: Trong code cũ của bạn không thấy dùng biến này cho input, tôi giữ nguyên
-        setUsername,
-        password,
-        setPassword,
-        handleLogin,
-        handleRegister,
-    } = useLoginViewModel();
+type LoginScreenProps = {
+    onLoginSuccess?: (role: string) => void;
+};
 
-    const [nameInput, setNameInput] = useState("");
-    const [name, setName] = useState("");
+export const LoginScreen = ({ onLoginSuccess }: LoginScreenProps) => {
+    const { password, setPassword, handleLogin } = useLoginViewModel(onLoginSuccess);
+    const { width, height } = useWindowDimensions();
+    const isLandscape = width > height;
+
+    const { isDark, toggleTheme, colors } = useTheme();
+    // Memo-ize styles dựa trên colors để tránh tạo lại không cần thiết
+    const styles = createLoginStyles(colors);
+
+    const [usernameInput, setUsernameInput] = useState('');
 
     const handlePressLogin = () => {
-        setName(nameInput);
-        handleLogin();
+        handleLogin(usernameInput);
     };
 
     return (
-        /* LinearGradient đưa ra ngoài cùng để phủ màu toàn bộ màn hình */
         <LinearGradient
-            colors={['#8B0000', '#FF4D4D']} // Dark red to light red
+            colors={colors.loginGradient}
             style={styles.gradientContainer}
         >
-            {/* SafeAreaView bọc nội dung để không bị lẹm vào tai thỏ/thanh trạng thái */}
             <SafeAreaView style={styles.safeArea}>
-                {/* View này dùng để căn giữa các thẻ theo trục dọc */}
-                <View style={styles.formContainer}>
-                    <View style={styles.logoContainer}>
-                        <Image
-                            source={require('../../../../assets/image/hust-logo.png')}
-                            style={styles.logo}
-                        />
-                    </View>
-
-                    <Text style={styles.description}>
-                        Hệ thống đăng ký học tập tiện lợi
+                {/* ── Nút Toggle Dark/Light Mode ─────────────────────── */}
+                <TouchableOpacity
+                    style={styles.themeToggleBtn}
+                    onPress={toggleTheme}
+                    testID="theme-toggle-btn"
+                    accessibilityLabel={isDark ? 'Chuyển sang chế độ sáng' : 'Chuyển sang chế độ tối'}
+                >
+                    <Text style={{ fontSize: 16 }}>{isDark ? '☀️' : '🌙'}</Text>
+                    <Text style={styles.themeToggleText}>
+                        {isDark ? 'Giao diện Sáng' : 'Giao diện Tối'}
                     </Text>
+                </TouchableOpacity>
 
-                    <TextInput
-                        style={styles.input}
-                        placeholder="Tài khoản"
-                        value={nameInput}
-                        onChangeText={setNameInput}
-                        autoCapitalize="none"
-                        placeholderTextColor="#666"
-                    />
-
-                    <TextInput
-                        style={styles.input}
-                        placeholder="Mật khẩu"
-                        value={password}
-                        onChangeText={setPassword}
-                        secureTextEntry
-                        placeholderTextColor="#666"
-                    />
-
-                    <TouchableOpacity
-                        style={styles.loginButton}
-                        onPress={handlePressLogin}
+                <ScrollView
+                    contentContainerStyle={[
+                        styles.scrollContent,
+                        isLandscape && styles.scrollContentLandscape,
+                    ]}
+                    keyboardShouldPersistTaps="handled"
+                >
+                    <View
+                        style={[
+                            styles.formContainer,
+                            isLandscape && styles.formContainerLandscape,
+                        ]}
                     >
-                        <Text style={styles.loginButtonText}>Đăng nhập</Text>
-                    </TouchableOpacity>
+                        <View
+                            style={[
+                                styles.logoContainer,
+                                isLandscape && styles.logoContainerLandscape,
+                            ]}
+                        >
+                            <Image
+                                source={require('../../../../assets/image/hust-logo.png')}
+                                style={[
+                                    styles.logo,
+                                    isLandscape && styles.logoLandscape,
+                                ]}
+                            />
+                        </View>
 
-
-                    {name ? (
-                        <Text style={styles.welcomeText}>
-                            Chào mừng: {name}
+                        <Text
+                            style={[
+                                styles.description,
+                                isLandscape && styles.descriptionLandscape,
+                            ]}
+                        >
+                            Hệ thống đăng ký học tập tiện lợi
                         </Text>
-                    ) : null}
-                </View>
+
+                        <TextInput
+                            style={[styles.input, isLandscape && styles.inputLandscape]}
+                            placeholder="Tài khoản"
+                            value={usernameInput}
+                            onChangeText={setUsernameInput}
+                            autoCapitalize="none"
+                            placeholderTextColor={colors.textSecondary}
+                        />
+
+                        <TextInput
+                            style={[styles.input, isLandscape && styles.inputLandscape]}
+                            placeholder="Mật khẩu"
+                            value={password}
+                            onChangeText={setPassword}
+                            secureTextEntry
+                            placeholderTextColor={colors.textSecondary}
+                        />
+
+                        <TouchableOpacity
+                            style={[
+                                styles.loginButton,
+                                isLandscape && styles.loginButtonLandscape,
+                            ]}
+                            onPress={handlePressLogin}
+                        >
+                            <Text style={styles.loginButtonText}>Đăng nhập</Text>
+                        </TouchableOpacity>
+                    </View>
+                </ScrollView>
             </SafeAreaView>
         </LinearGradient>
     );
